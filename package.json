@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "fast-xml-parser": "^4.3.4",
+    "h3-zod": "^0.5.3",
     "nuxt": "^3.10.1",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^1.1.6"
