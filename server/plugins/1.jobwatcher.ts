@@ -1,4 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
+import { validateWorkzag } from "~/utils/lib";
+
+const FETCH_INTERVAL_MS = 30000;
 
 const xml = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -207,12 +210,29 @@ export default defineNitroPlugin((nitroApp) => {
   console.log("Job watcher plugin added");
   const interval = setInterval(() => {
     console.log("Job watcher fetching...");
-    const XMLdata = xml; // `<?xml version="1.0" encoding="UTF-8"?><workzag-jobs></workzag-jobs>`;
+    const XMLdata = xml;
     const parser = new XMLParser();
     let json = parser.parse(XMLdata);
     const positions = json["workzag-jobs"]["position"];
-    console.log("Found jobs: ", positions.length);
-  }, 15000);
+
+    const validPositions = positions
+      .map((position: any) => {
+        try {
+          const p = validateWorkzag(position);
+
+          if (!p.success) {
+            console.error("Error validating Workzag data: ", p.error);
+            return null;
+          }
+          return p;
+        } catch (err: any) {
+          console.error("Error validating Workzag data: ", err.error);
+        }
+      })
+      .filter((p: any) => p);
+
+    console.log("Found valid jobs: ", validPositions.length);
+  }, FETCH_INTERVAL_MS);
 
   nitroApp.hooks.hook("close", async () => {
     clearTimeout(interval);
