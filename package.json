@@ -19,6 +19,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@nuxtjs/supabase": "^1.1.6"
+    "@nuxtjs/supabase": "^1.1.6",
+    "@nuxtjs/tailwindcss": "^6.11.3"
   }
 }

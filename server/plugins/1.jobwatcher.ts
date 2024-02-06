@@ -1,6 +1,8 @@
 import { XMLParser } from "fast-xml-parser";
 import { validateWorkzag } from "~/utils/lib";
 
+const FETCH_INTERVAL_MS = 30000;
+
 const xml = `
 <?xml version="1.0" encoding="UTF-8"?>
 <workzag-jobs>
@@ -230,7 +232,7 @@ export default defineNitroPlugin((nitroApp) => {
       .filter((p: any) => p);
 
     console.log("Found valid jobs: ", validPositions.length);
-  }, 15000);
+  }, FETCH_INTERVAL_MS);
 
   nitroApp.hooks.hook("close", async () => {
     clearTimeout(interval);
