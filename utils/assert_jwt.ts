@@ -23,9 +23,6 @@ export const assert_jwt = defineRequestMiddleware(async (event) => {
     "utf-8"
   );
 
-  console.log("from", validParams.authKey);
-  console.log("to", utf8signedJwt);
-
   try {
     const decodedJwt: AuthKey = jwt.verify(
       utf8signedJwt,
@@ -37,7 +34,7 @@ export const assert_jwt = defineRequestMiddleware(async (event) => {
       await sbclient
         .from("users")
         .select("*")
-        .eq("id", decodedJwt.jobId)
+        .eq("id", decodedJwt.modId)
         .single()
     ).data;
     console.log("Request from mod", mod);
