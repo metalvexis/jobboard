@@ -5,22 +5,22 @@ import type { Tables, Database } from "~/utils/supabase";
 import { USER_ROLES, APPROVAL_STATUS } from "~/utils/constants";
 
 export default eventHandler(async (event) => {
-  const sbclient = serverSupabaseServiceRole<Database>(event);
-
-  readRawBody(event);
-
   const { email, ...rest } = await zh.useValidatedBody(
     event,
     zCreateWorkzagReq
   );
 
+  const sbclient = serverSupabaseServiceRole<Database>(event);
   let userId: number | null = null;
+
+  // check if user exists
   const assertUser = await sbclient
     .from("users")
     .select("id, email")
     .eq("email", email);
 
   if (!assertUser.data?.length) {
+    // create new user
     const newUser = (
       await sbclient
         .from("users")
@@ -49,7 +49,7 @@ export default eventHandler(async (event) => {
 
   const newJobInserted = await sbclient.from("jobs").insert(newJob).select();
 
-  console.log("jobs", newJobInserted);
+  console.log("job created", newJobInserted);
 
   return {
     jobId: newJobInserted.data?.[0].id,
