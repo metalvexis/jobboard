@@ -36,6 +36,8 @@ export const zWorkzag = z.object({
   createdAt: z.string().optional(),
 });
 
+export type Workzag = z.infer<typeof zWorkzag>;
+
 export const zGetWorkzagReq = z.object({
   jobId: z.string(),
 });

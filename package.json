@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxt/ui": "^2.13.0",
     "amqplib": "^0.10.3",
+    "buffer": "^6.0.3",
     "fast-xml-parser": "^4.3.4",
     "h3-zod": "^0.5.3",
     "jsonwebtoken": "^9.0.2",
