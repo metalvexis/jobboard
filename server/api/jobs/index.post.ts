@@ -2,7 +2,7 @@ import { serverSupabaseServiceRole } from "#supabase/server";
 import { zh } from "h3-zod";
 import { zCreateWorkzagReq } from "~/utils/zods";
 import type { Tables, Database } from "~/utils/supabase";
-import { USER_ROLES } from "~/utils/constants";
+import { USER_ROLES, APPROVAL_STATUS } from "~/utils/constants";
 
 export default eventHandler(async (event) => {
   const sbclient = serverSupabaseServiceRole<Database>(event);
@@ -39,10 +39,11 @@ export default eventHandler(async (event) => {
 
   const newJob: Partial<Tables<"jobs">> = {
     user_id: userId,
+    approval_status: APPROVAL_STATUS.PENDING,
     ...rest,
   };
 
-  if (assertUser.count === 0) {
+  if (!assertUser.data?.length) {
     // TODO: notify moderators of new user posting
   }
 
