@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import { validateWorkzag } from "~/utils/lib";
-
-const FETCH_INTERVAL_MS = 30000;
+import { toSnakeCase } from "~/utils/lib";
+const FETCH_INTERVAL_MS = 15000;
 
 const xml = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -224,7 +224,9 @@ export default defineNitroPlugin((nitroApp) => {
             console.error("Error validating Workzag data: ", p.error);
             return null;
           }
-          return p;
+
+          const newJob = toSnakeCase(p.data);
+          return newJob;
         } catch (err: any) {
           console.error("Error validating Workzag data: ", err.error);
         }

@@ -1,0 +1,16 @@
+### Get all jobs paginated
+GET http://localhost:3000/api/jobs?page=0
+
+### Get a job by id
+GET http://localhost:3000/api/jobs/asdfasdfkl
+
+### Create new Job
+
+POST http://localhost:3000/api/jobs
+content-type: application/json
+
+{
+  "email": "user@mail.com",
+  "name": "Seniore Backend Developer (m/w/d)",
+  "office": "Germany"
+}

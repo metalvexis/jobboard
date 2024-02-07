@@ -4,108 +4,108 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       jobs: {
         Row: {
-          additional_offices: Json | null;
-          created_at: string;
-          department: string | null;
-          employment_type: string | null;
-          id: number;
-          job_descriptions: Json | null;
-          name: string | null;
-          occupation: string | null;
-          occupation_category: string | null;
-          office: string | null;
-          recruiting_category: string | null;
-          schedule: string | null;
-          seniority: string | null;
-          subcompany: string | null;
-          user_id: number | null;
-          years_of_experience: string | null;
-        };
+          additional_offices: Json | null
+          created_at: string
+          department: string | null
+          employment_type: string | null
+          id: number
+          job_descriptions: Json | null
+          name: string | null
+          occupation: string | null
+          occupation_category: string | null
+          office: string | null
+          recruiting_category: string | null
+          schedule: string | null
+          seniority: string | null
+          subcompany: string | null
+          user_id: number | null
+          years_of_experience: string | null
+        }
         Insert: {
-          additional_offices?: Json | null;
-          created_at?: string;
-          department?: string | null;
-          employment_type?: string | null;
-          id?: number;
-          job_descriptions?: Json | null;
-          name?: string | null;
-          occupation?: string | null;
-          occupation_category?: string | null;
-          office?: string | null;
-          recruiting_category?: string | null;
-          schedule?: string | null;
-          seniority?: string | null;
-          subcompany?: string | null;
-          user_id?: number | null;
-          years_of_experience?: string | null;
-        };
+          additional_offices?: Json | null
+          created_at?: string
+          department?: string | null
+          employment_type?: string | null
+          id?: number
+          job_descriptions?: Json | null
+          name?: string | null
+          occupation?: string | null
+          occupation_category?: string | null
+          office?: string | null
+          recruiting_category?: string | null
+          schedule?: string | null
+          seniority?: string | null
+          subcompany?: string | null
+          user_id?: number | null
+          years_of_experience?: string | null
+        }
         Update: {
-          additional_offices?: Json | null;
-          created_at?: string;
-          department?: string | null;
-          employment_type?: string | null;
-          id?: number;
-          job_descriptions?: Json | null;
-          name?: string | null;
-          occupation?: string | null;
-          occupation_category?: string | null;
-          office?: string | null;
-          recruiting_category?: string | null;
-          schedule?: string | null;
-          seniority?: string | null;
-          subcompany?: string | null;
-          user_id?: number | null;
-          years_of_experience?: string | null;
-        };
+          additional_offices?: Json | null
+          created_at?: string
+          department?: string | null
+          employment_type?: string | null
+          id?: number
+          job_descriptions?: Json | null
+          name?: string | null
+          occupation?: string | null
+          occupation_category?: string | null
+          office?: string | null
+          recruiting_category?: string | null
+          schedule?: string | null
+          seniority?: string | null
+          subcompany?: string | null
+          user_id?: number | null
+          years_of_experience?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: "jobs_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            foreignKeyName: "jobs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
-        ];
-      };
+        ]
+      }
       users: {
         Row: {
-          created_at: string;
-          email: string;
-          id: number;
-        };
+          created_at: string
+          email: string
+          id: number
+        }
         Insert: {
-          created_at?: string;
-          email?: string;
-          id?: number;
-        };
+          created_at?: string
+          email?: string
+          id?: number
+        }
         Update: {
-          created_at?: string;
-          email?: string;
-          id?: number;
-        };
-        Relationships: [];
-      };
-    };
+          created_at?: string
+          email?: string
+          id?: number
+        }
+        Relationships: []
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
 }
 
 export type Tables<
@@ -119,7 +119,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
@@ -127,11 +127,11 @@ export type Tables<
       Database["public"]["Views"])
   ? (Database["public"]["Tables"] &
       Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
-  : never;
+  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -142,17 +142,17 @@ export type TablesInsert<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
-  : never;
+  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -163,17 +163,17 @@ export type TablesUpdate<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
-  : never;
+  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -186,4 +186,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never;
+  : never
