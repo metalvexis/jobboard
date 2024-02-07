@@ -19,22 +19,12 @@ export const assert_jwt = defineRequestMiddleware(async (event) => {
     throw createError({ statusCode: 500 });
   }
 
-  //TODO: use this to generate jwt for testing
-  const signedJwt = jwt.sign(
-    {
-      modId: 3,
-      jobId: 3,
-    },
-    process.env.JWT_MODS_SECRET,
-    { expiresIn: "48h" }
-  );
-  const b64signedJwt = Buffer.from(signedJwt).toString("base64");
-
-  console.log("signedJwt base64", b64signedJwt);
-
   const utf8signedJwt = Buffer.from(validParams.authKey, "base64").toString(
     "utf-8"
   );
+
+  console.log("from", validParams.authKey);
+  console.log("to", utf8signedJwt);
 
   try {
     const decodedJwt: AuthKey = jwt.verify(
@@ -52,12 +42,12 @@ export const assert_jwt = defineRequestMiddleware(async (event) => {
     ).data;
 
     if (mod?.role !== USER_ROLES.MOD) {
-      throw createError({ statusCode: 403 });
+      throw createError({ statusCode: 403, message: "Not a moderator" });
     }
 
     // cast to string to avoid type coercion
     if (`${job.id}` !== `${decodedJwt.jobId}`) {
-      throw createError({ statusCode: 403 });
+      throw createError({ statusCode: 403, message: "ID mismatch" });
     }
 
     decodedJwt.modId;

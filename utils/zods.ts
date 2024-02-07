@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Tables } from "~/utils/supabase";
 
 // Validator for fetched jobs from https://mrge-group-gmbh.jobs.personio.de/xml
 export const zWorkzag = z.object({
@@ -96,3 +97,12 @@ export const zAuthKey = z.object({
 });
 
 export type AuthKey = z.infer<typeof zAuthKey>;
+
+export type NotificationReq = {
+  receivers: {
+    id: number;
+    email: string;
+  }[];
+  job: Partial<Tables<"jobs">>;
+  user: string;
+};

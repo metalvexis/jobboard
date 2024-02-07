@@ -1,9 +1,12 @@
 import { serverSupabaseServiceRole } from "#supabase/server";
 import { zh } from "h3-zod";
 import { zCreateWorkzagReq } from "~/utils/zods";
+import type { NotificationReq } from "~/utils/zods";
 import type { Tables, Database } from "~/utils/supabase";
-import { USER_ROLES, APPROVAL_STATUS, NOTIF_QUEUE } from "~/utils/constants";
+import { USER_ROLES, APPROVAL_STATUS } from "~/utils/constants";
 import { publishToQueue } from "~/utils/lib";
+
+const QUEUE_NAME = process.env.NOTIF_QUEUE || "NOTIF_QUEUE";
 
 export default eventHandler(async (event) => {
   const { email, ...rest } = await zh.useValidatedBody(
@@ -29,14 +32,15 @@ export default eventHandler(async (event) => {
           role: USER_ROLES.USER,
           email,
         })
-        .returns<Tables<"users">>()
+        .select()
     ).data;
-    userId = newUser ? newUser.id : null;
+
+    userId = newUser?.[0] ? newUser[0].id : null;
 
     console.log("created new user", newUser);
+  } else {
+    userId = assertUser.data[0].id || null;
   }
-  userId =
-    assertUser.data?.length && assertUser.data ? assertUser.data[0].id : null;
 
   const newJob: Partial<Tables<"jobs">> = {
     user_id: userId,
@@ -58,13 +62,14 @@ export default eventHandler(async (event) => {
     ).data;
 
     if (mods) {
-      const notifData = JSON.stringify({
+      const notifData: NotificationReq = {
         receivers: mods,
-        job: newJob,
-      });
-
-      console.log("sending notif to mods", notifData);
-      await publishToQueue(NOTIF_QUEUE, notifData);
+        job: newJobInserted.data?.[0] || {},
+        user: email,
+      };
+      const notifDataStr = JSON.stringify(notifData);
+      console.log("sending notif to mods", notifDataStr);
+      await publishToQueue(QUEUE_NAME, notifDataStr);
     }
   }
 
