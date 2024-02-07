@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Tables } from "~/utils/supabase";
 
 // Validator for fetched jobs from https://mrge-group-gmbh.jobs.personio.de/xml
 export const zWorkzag = z.object({
@@ -42,10 +43,15 @@ export const zGetWorkzagReq = z.object({
 export type GetWorkzagReq = z.infer<typeof zGetWorkzagReq>;
 
 export const zGetWorkzagListReq = z.object({
-  page: z.string(),
+  page: z.string().optional(),
 });
 
 export type GetWorkzagListReq = z.infer<typeof zGetWorkzagListReq>;
+export type GetWorkzagListRes = {
+  jobs: Partial<Tables<"jobs">>[];
+  totalJobCount: number;
+  totalPages: number;
+};
 
 export const zCreateWorkzagReq = z.object({
   email: z.string(),
@@ -96,3 +102,12 @@ export const zAuthKey = z.object({
 });
 
 export type AuthKey = z.infer<typeof zAuthKey>;
+
+export type NotificationReq = {
+  receivers: {
+    id: number;
+    email: string;
+  }[];
+  job: Partial<Tables<"jobs">>;
+  user: string;
+};
