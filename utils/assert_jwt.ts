@@ -31,7 +31,7 @@ export const assert_jwt = defineRequestMiddleware(async (event) => {
       utf8signedJwt,
       process.env.JWT_MODS_SECRET
     ) as AuthKey;
-
+    console.log("Decoded JWT", decodedJwt);
     const sbclient = serverSupabaseServiceRole<Database>(event);
     const mod = (
       await sbclient
@@ -40,7 +40,7 @@ export const assert_jwt = defineRequestMiddleware(async (event) => {
         .eq("id", decodedJwt.jobId)
         .single()
     ).data;
-
+    console.log("Request from mod", mod);
     if (mod?.role !== USER_ROLES.MOD) {
       throw createError({ statusCode: 403, message: "Not a moderator" });
     }
