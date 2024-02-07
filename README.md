@@ -12,6 +12,83 @@ TBD
 
 # API Endpoints
 
+## GET api/jobs
+
+Create a new job posting
+
+### Query Parameters
+
+| field | type     | description |
+| ----- | -------- | ----------- |
+| page  | `string` |             |
+
+### Responses
+
+| code | description |
+| ---- | ----------- |
+| 200  | success     |
+
+```json
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Job name here",
+      "company": "Backend Engineer",
+      ...
+    },
+    ...
+  ]
+}
+```
+
+| code | description         |
+| ---- | ------------------- |
+| 400  | check error message |
+
+```json
+{
+  "message": "error message here"
+}
+```
+
+## GET api/jobs/:jobId
+
+Create a new job posting
+
+### Path Parameters
+
+| field | type     | description |
+| ----- | -------- | ----------- |
+| jobId | `string` |             |
+
+### Responses
+
+| code | description |
+| ---- | ----------- |
+| 200  | success     |
+
+```json
+{
+  {
+    "id": 1,
+    "title": "Job name here",
+    "company": "Backend Engineer",
+    ...
+  }
+}
+```
+
+| code | description         |
+| ---- | ------------------- |
+| 400  | check error message |
+
+```json
+{
+  "message": "error message here"
+}
+```
+
 ## POST api/jobs
 
 Create a new job posting
@@ -56,15 +133,15 @@ Example Body
 }
 ```
 
-## GET api/mods/jobs/approve/:jobId
+## GET api/mods/approve/:jobId
 
 Approve a job posting
 
 ### Query Parameters
 
-| field  | type     | description                             |
-| ------ | -------- | --------------------------------------- |
-| authId | `string` | base-64 encoded jwt with 48-hour expiry |
+| field   | type     | description                             |
+| ------- | -------- | --------------------------------------- |
+| authKey | `string` | base-64 encoded jwt with 48-hour expiry |
 
 ### Responses
 
@@ -79,15 +156,15 @@ Approve a job posting
 }
 ```
 
-## GET api/mods/jobs/mark-as-spam/:jobId
+## GET api/mods/mark-as-spam/:jobId
 
 Mark as spam job posting
 
 ### Query Parameters
 
-| field  | type     | description                             |
-| ------ | -------- | --------------------------------------- |
-| authId | `string` | base-64 encoded jwt with 48-hour expiry |
+| field   | type     | description                             |
+| ------- | -------- | --------------------------------------- |
+| authKey | `string` | base-64 encoded jwt with 48-hour expiry |
 
 ### Responses
 
