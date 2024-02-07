@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 
   pages: true,
 
-  modules: ["@nuxtjs/supabase", "@nuxtjs/tailwindcss", "@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/supabase", "@nuxt/ui"],
 
   supabase: {
     redirect: false,

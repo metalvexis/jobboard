@@ -1,5 +1,7 @@
 <template>
-  <slot />
+  <div class="container p-8 sm:px-16">
+    <slot />
+  </div>
 </template>
 
 <script setup>
