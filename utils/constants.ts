@@ -15,3 +15,5 @@ export const APPROVAL_STATUS: Readonly<{
   APPROVED: "approved",
   SPAM: "spam",
 };
+
+export const NOTIF_QUEUE = "NOTIF_QUEUE";

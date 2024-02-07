@@ -2,7 +2,8 @@ import { serverSupabaseServiceRole } from "#supabase/server";
 import { zh } from "h3-zod";
 import { zCreateWorkzagReq } from "~/utils/zods";
 import type { Tables, Database } from "~/utils/supabase";
-import { USER_ROLES, APPROVAL_STATUS } from "~/utils/constants";
+import { USER_ROLES, APPROVAL_STATUS, NOTIF_QUEUE } from "~/utils/constants";
+import { publishToQueue } from "~/utils/lib";
 
 export default eventHandler(async (event) => {
   const { email, ...rest } = await zh.useValidatedBody(
@@ -19,8 +20,8 @@ export default eventHandler(async (event) => {
     .select("id, email")
     .eq("email", email);
 
+  // create new user
   if (!assertUser.data?.length) {
-    // create new user
     const newUser = (
       await sbclient
         .from("users")
@@ -43,13 +44,29 @@ export default eventHandler(async (event) => {
     ...rest,
   };
 
-  if (!assertUser.data?.length) {
-    // TODO: notify moderators of new user posting
-  }
-
   const newJobInserted = await sbclient.from("jobs").insert(newJob).select();
 
   console.log("job created", newJobInserted);
+
+  if (!assertUser.data?.length) {
+    // Notify moderators of new user posting
+    const mods = (
+      await sbclient
+        .from("users")
+        .select("id, email")
+        .eq("role", USER_ROLES.MOD)
+    ).data;
+
+    if (mods) {
+      const notifData = JSON.stringify({
+        receivers: mods,
+        job: newJob,
+      });
+
+      console.log("sending notif to mods", notifData);
+      await publishToQueue(NOTIF_QUEUE, notifData);
+    }
+  }
 
   return {
     jobId: newJobInserted.data?.[0].id,

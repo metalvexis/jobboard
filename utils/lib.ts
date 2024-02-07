@@ -1,4 +1,6 @@
+import amqplib from "amqplib";
 import { zWorkzag } from "./zods";
+
 export const validateWorkzag = (data: unknown) => {
   return zWorkzag.safeParse(data);
 };
@@ -19,4 +21,27 @@ export const toSnakeCase = (json: Record<string, unknown>) => {
   return snakeCased;
 };
 
-// create a function that converts a camelCased object to snake_cased
+export const publishToQueue = async (queue: string, data: string) => {
+  if (!process.env.RABBITMQ_URL) {
+    throw new Error("RABBITMQ_URL not found in env");
+  }
+
+  const conn = await amqplib.connect(process.env.RABBITMQ_URL, {
+    clientProperties: { connection_name: "JobBoardWebServer" },
+  });
+
+  const ch1 = await conn.createChannel();
+  await ch1.assertQueue(queue, {
+    durable: true,
+  });
+
+  ch1.sendToQueue(queue, Buffer.from(data), {
+    persistent: true,
+  });
+
+  console.log("published to queue", queue, data);
+
+  setTimeout(() => {
+    conn.close();
+  });
+};
