@@ -1,7 +1,8 @@
 import { serverSupabaseServiceRole } from "#supabase/server";
 import type { Tables, Database } from "~/utils/supabase";
 import { zh } from "h3-zod";
-import { zGetWorkzagListReq, GetWorkzagListReq } from "~/utils/zods";
+import { zGetWorkzagListReq } from "~/utils/zods";
+import type { GetWorkzagListReq } from "~/utils/zods";
 
 export default eventHandler(async (event) => {
   await zh.useValidatedQuery(event, zGetWorkzagListReq);

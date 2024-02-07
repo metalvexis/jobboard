@@ -81,3 +81,18 @@ export const zCreateWorkzagReq = z.object({
 });
 
 export type CreateWorkzagReq = z.infer<typeof zCreateWorkzagReq>;
+
+export const zModsAuthReq = z.object({
+  authKey: z.string(),
+});
+
+export type ModAuthReq = z.infer<typeof zModsAuthReq>;
+
+export const zAuthKey = z.object({
+  jobId: z.union([z.string(), z.number()]),
+  modId: z.union([z.string(), z.number()]),
+  iat: z.number(),
+  exp: z.number(),
+});
+
+export type AuthKey = z.infer<typeof zAuthKey>;

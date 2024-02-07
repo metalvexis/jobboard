@@ -2,6 +2,7 @@ import { serverSupabaseServiceRole } from "#supabase/server";
 import { zh } from "h3-zod";
 import { zCreateWorkzagReq } from "~/utils/zods";
 import type { Tables, Database } from "~/utils/supabase";
+import { USER_ROLES } from "~/utils/constants";
 
 export default eventHandler(async (event) => {
   const sbclient = serverSupabaseServiceRole<Database>(event);
@@ -21,7 +22,13 @@ export default eventHandler(async (event) => {
 
   if (!assertUser.data?.length) {
     const newUser = (
-      await sbclient.from("users").insert({ email }).returns<Tables<"users">>()
+      await sbclient
+        .from("users")
+        .insert({
+          role: USER_ROLES.USER,
+          email,
+        })
+        .returns<Tables<"users">>()
     ).data;
     userId = newUser ? newUser.id : null;
 

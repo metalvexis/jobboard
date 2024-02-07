@@ -133,15 +133,15 @@ Example Body
 }
 ```
 
-## GET api/mods/jobs/approve/:jobId
+## GET api/mods/approve/:jobId
 
 Approve a job posting
 
 ### Query Parameters
 
-| field  | type     | description                             |
-| ------ | -------- | --------------------------------------- |
-| authId | `string` | base-64 encoded jwt with 48-hour expiry |
+| field   | type     | description                             |
+| ------- | -------- | --------------------------------------- |
+| authKey | `string` | base-64 encoded jwt with 48-hour expiry |
 
 ### Responses
 
@@ -156,15 +156,15 @@ Approve a job posting
 }
 ```
 
-## GET api/mods/jobs/mark-as-spam/:jobId
+## GET api/mods/mark-as-spam/:jobId
 
 Mark as spam job posting
 
 ### Query Parameters
 
-| field  | type     | description                             |
-| ------ | -------- | --------------------------------------- |
-| authId | `string` | base-64 encoded jwt with 48-hour expiry |
+| field   | type     | description                             |
+| ------- | -------- | --------------------------------------- |
+| authKey | `string` | base-64 encoded jwt with 48-hour expiry |
 
 ### Responses
 

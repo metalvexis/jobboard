@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/jobs?page=0
 
 ### Get a job by id
-GET http://localhost:3000/api/jobs/4
+GET http://localhost:3000/api/jobs/3
 
 ### Create new Job
 
@@ -14,3 +14,9 @@ content-type: application/json
   "name": "Seniore Backend Developer (m/w/d)",
   "office": "Germany"
 }
+
+### Approve job post
+GET http://localhost:3000/api/mods/approve/3?authKey=ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnRiMlJKWkNJNk1Td2lhbTlpU1dRaU9pSmlZWElpTENKcFlYUWlPakUzTURjeU9EYzJOemtzSW1WNGNDSTZNVGN3TnpRMk1EUTNPWDAuTzREMTg0VU1DZ09rdWloQlY0YjZTTlg0TUIwUTNpcHZkYU5kYW5IZEhRYw==
+
+### Mark a job post as spam
+GET http://localhost:3000/api/mods/mark-as-spam/3
