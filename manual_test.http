@@ -16,7 +16,7 @@ content-type: application/json
 }
 
 ### Approve job post
-GET http://localhost:3000/api/mods/approve/4?authKey=ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnRiMlJKWkNJNk15d2lhbTlpU1dRaU9qTXNJbWxoZENJNk1UY3dOekk0T0RBME1Dd2laWGh3SWpveE56QTNORFl3T0RRd2ZRLnVCS1o1dFZ6UE5hRkxvMVlpVjhpakN2cHQ5bHhFTjVHMV8tNENUblEwU0k=
+GET http://localhost:3000/api/mods/approve/3?authKey=ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnRiMlJKWkNJNk15d2lhbTlpU1dRaU9qTXNJbWxoZENJNk1UY3dOekk0T0RBME1Dd2laWGh3SWpveE56QTNORFl3T0RRd2ZRLnVCS1o1dFZ6UE5hRkxvMVlpVjhpakN2cHQ5bHhFTjVHMV8tNENUblEwU0k=
 
 ### Mark a job post as spam
-GET http://localhost:3000/api/mods/mark-as-spam/3
+GET http://localhost:3000/api/mods/mark-as-spam/3?authKey=ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnRiMlJKWkNJNk15d2lhbTlpU1dRaU9qTXNJbWxoZENJNk1UY3dOekk0T0RBME1Dd2laWGh3SWpveE56QTNORFl3T0RRd2ZRLnVCS1o1dFZ6UE5hRkxvMVlpVjhpakN2cHQ5bHhFTjVHMV8tNENUblEwU0k=

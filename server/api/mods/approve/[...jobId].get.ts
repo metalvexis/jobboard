@@ -17,6 +17,7 @@ export default eventHandler({
         .update({ approval_status: APPROVAL_STATUS.APPROVED })
         .eq("id", job.id)
         .select()
+        .single()
     ).data;
 
     return {
