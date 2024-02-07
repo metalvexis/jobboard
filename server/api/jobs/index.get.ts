@@ -13,20 +13,21 @@ export default eventHandler(async (event): Promise<GetWorkzagListRes> => {
 
   const { page } = getQuery<GetWorkzagListReq>(event);
 
-  const startIndex = 0 * (parseInt(page || "") || 0);
-  const lastIndex = PER_PAGE * (parseInt(page || "") || 1);
+  const startIndex = PER_PAGE * (parseInt(page || "") || 0);
+  const lastIndex = startIndex + PER_PAGE - 1;
   console.log("range", startIndex, lastIndex);
   const allJobsCount = await sbclient
     .from("jobs")
     .select("id", { count: "exact", head: true });
   const totalJobCount = allJobsCount.count || 0;
-  const jobs = (
-    await sbclient
-      .from("jobs")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .range(startIndex, lastIndex)
-  ).data;
+  const jobs =
+    (
+      await sbclient
+        .from("jobs")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .range(startIndex, lastIndex)
+    ).data || [];
 
   return {
     jobs,

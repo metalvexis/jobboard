@@ -47,6 +47,29 @@ export const zGetWorkzagListReq = z.object({
 });
 
 export type GetWorkzagListReq = z.infer<typeof zGetWorkzagListReq>;
+
+// Copied from supabase.ts to avoid :
+// Type instantiation is excessively deep and possibly infinite.
+export type JobItem = {
+  additional_offices?: Json | null;
+  approval_status?: string | null;
+  created_at?: string;
+  department?: string | null;
+  employment_type?: string | null;
+  id?: number;
+  job_descriptions?: Json | null;
+  name?: string | null;
+  occupation?: string | null;
+  occupation_category?: string | null;
+  office?: string | null;
+  recruiting_category?: string | null;
+  schedule?: string | null;
+  seniority?: string | null;
+  subcompany?: string | null;
+  user_id?: number | null;
+  years_of_experience?: string | null;
+};
+
 export type GetWorkzagListRes = {
   jobs: Partial<Tables<"jobs">>[];
   totalJobCount: number;
