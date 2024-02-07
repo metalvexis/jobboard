@@ -35,13 +35,19 @@ export const zWorkzag = z.object({
   createdAt: z.string().optional(),
 });
 
-export const zGetWorkzag = z.object({
+export const zGetWorkzagReq = z.object({
+  jobId: z.string(),
+});
+
+export type GetWorkzagReq = z.infer<typeof zGetWorkzagReq>;
+
+export const zGetWorkzagListReq = z.object({
   page: z.string(),
 });
 
-export type GetWorkzag = z.infer<typeof zGetWorkzag>;
+export type GetWorkzagListReq = z.infer<typeof zGetWorkzagListReq>;
 
-export const zCreateWorkzag = z.object({
+export const zCreateWorkzagReq = z.object({
   email: z.string(),
   subcompany: z.string().optional(),
   office: z.string().optional(),
@@ -73,3 +79,5 @@ export const zCreateWorkzag = z.object({
   occupation: z.string().optional(),
   occupation_category: z.string().optional(),
 });
+
+export type CreateWorkzagReq = z.infer<typeof zCreateWorkzagReq>;

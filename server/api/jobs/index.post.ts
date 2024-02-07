@@ -1,6 +1,6 @@
 import { serverSupabaseServiceRole } from "#supabase/server";
 import { zh } from "h3-zod";
-import { zCreateWorkzag } from "~/utils/zods";
+import { zCreateWorkzagReq } from "~/utils/zods";
 import type { Tables, Database } from "~/utils/supabase";
 
 export default eventHandler(async (event) => {
@@ -8,7 +8,10 @@ export default eventHandler(async (event) => {
 
   readRawBody(event);
 
-  const { email, ...rest } = await zh.useValidatedBody(event, zCreateWorkzag);
+  const { email, ...rest } = await zh.useValidatedBody(
+    event,
+    zCreateWorkzagReq
+  );
 
   let userId: number | null = null;
   const assertUser = await sbclient
