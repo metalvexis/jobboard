@@ -12,7 +12,7 @@ POST https://jobboard-production-2cf3.up.railway.app/api/jobs
 content-type: application/json
 
 {
-  "email": "user18@mail.com",
+  "email": "user21@mail.com",
   "name": "Senior Backend Developer (m/w/d)",
   "office": "Germany"
 }

@@ -43,10 +43,15 @@ export const zGetWorkzagReq = z.object({
 export type GetWorkzagReq = z.infer<typeof zGetWorkzagReq>;
 
 export const zGetWorkzagListReq = z.object({
-  page: z.string(),
+  page: z.string().optional(),
 });
 
 export type GetWorkzagListReq = z.infer<typeof zGetWorkzagListReq>;
+export type GetWorkzagListRes = {
+  jobs: Partial<Tables<"jobs">>[];
+  totalJobCount: number;
+  totalPages: number;
+};
 
 export const zCreateWorkzagReq = z.object({
   email: z.string(),
