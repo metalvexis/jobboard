@@ -15,7 +15,7 @@ export default eventHandler(async (event): Promise<GetWorkzagListRes> => {
 
   const startIndex = PER_PAGE * (parseInt(page || "") || 0);
   const lastIndex = startIndex + PER_PAGE - 1;
-  console.log("range", startIndex, lastIndex);
+
   const allJobsCount = await sbclient
     .from("jobs")
     .select("id", { count: "exact", head: true })

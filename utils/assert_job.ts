@@ -16,7 +16,6 @@ export const assert_job = defineRequestMiddleware(async (event) => {
     await sbclient.from("jobs").select("*").eq("id", validParams.jobId).single()
   ).data;
 
-  console.log("job", job);
   if (!job) {
     throw createError({
       statusCode: 404,

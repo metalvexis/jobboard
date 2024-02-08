@@ -1,24 +1,27 @@
 import type { Tables } from "#imports";
 import { XMLParser } from "fast-xml-parser";
-import { useStorage } from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 
 const CACHE_KEY = "JOBBOARD_WORKZAG";
-const store = useStorage(CACHE_KEY, {} as CachedWorkzag);
+const CACHE_EXPIRY = 1000 * 60 * 15; // 15 minutes
+const EXT_API = process.env.WORKZAG_API_URL || 'https://mrge-group-gmbh.jobs.personio.de'
 
 type CachedWorkzag = {
   workzag: Partial<Tables<"jobs">>[];
   timestamp: number;
 };
+
 const fetchWorkzag = async () => {
   // Fetch data from https://mrge-group-gmbh.jobs.personio.de/xml
   const XMLdata = await useAsyncData("workzag", () =>
-    $fetch<string>("https://mrge-group-gmbh.jobs.personio.de/xml")
+    $fetch<string>(EXT_API+"/xml")
   );
   const parser = new XMLParser();
+  console.log(XMLdata.data.value)
   let json = parser.parse(XMLdata.data.value || "");
 
-  console.log("json", json);
   const positions = json["workzag-jobs"]["position"];
+  console.log("positions", positions);
   const validPositions: Partial<Tables<"jobs">>[] = positions.map(
     (position: any) => {
       const p = validateWorkzag(position);
@@ -32,15 +35,14 @@ const fetchWorkzag = async () => {
       return newJob;
     }
   );
-  console.log("validPositions", validPositions);
 
   return validPositions;
 };
 
 export const useCachedWorkzag = async () => {
-  // const parsed: CachedWorkzag = cached ? JSON.parse(cached) : null;
-  console.log("store.value", store.value);
-  const isStale = Date.now() - store.value.timestamp > 1000 * 60 * 60;
+  const store = useLocalStorage(CACHE_KEY, {} as CachedWorkzag, { mergeDefaults: true });
+
+  const isStale = Date.now() - store.value.timestamp > CACHE_EXPIRY;
   if (!store.value.workzag || isStale) {
     const newWorkzag = (await fetchWorkzag()) || [];
     console.log("Workzag data refreshed, updating cache:", newWorkzag);

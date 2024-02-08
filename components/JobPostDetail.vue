@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-
 const jobDescriptions: JobDescription[] = reactive([])
 const props = defineProps<{
   jobItem: Partial<Tables<"jobs">> | null,

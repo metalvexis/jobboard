@@ -1,8 +1,9 @@
+
 <template>
   <div class="flex flex-col gap-8 py-6 px-8 relative justify-center">
     <!-- <ULink to="/jobs-ext">Jobs External</ULink> -->
-    <JobPostSummary :jobsList="extJobsList" path="/jobs-ext/" />
-    <JobPostSummary :jobsList="jobsList" path="/jobs-int/" />
+    <JobPostSummary :jobsList="extJobsList" :path="EXT_API+'/job/'" :isExternal="true"/>
+    <JobPostSummary :jobsList="jobsList" path="/jobs-int/" :isExternal="false"/>
 
     <div class="flex justify-center">
       <button class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded" @click="loadMore"
@@ -13,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+const EXT_API = process.env.WORKZAG_API_URL || 'https://mrge-group-gmbh.jobs.personio.de'
 useSeoMeta({
   title: 'Job Board',
   description: 'Job board for the company',
@@ -50,4 +52,8 @@ const fetchJobs = async (page: number) => {
 }
 
 fetchJobs(0);
+
+watch(cachedWorkzag, (newVal) => {
+  console.log("useCachedWorkzag", newVal);
+})
 </script>
