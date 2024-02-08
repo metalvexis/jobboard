@@ -12,9 +12,20 @@ POST http://localhost:3000/api/jobs
 content-type: application/json
 
 {
-  "email": "user16@mail.com",
-  "name": "Senior Backend Developer (m/w/d)",
-  "office": "Germany"
+  "email": "user24@mail.com",
+  "name": "Full Stack Developer (m/w/d)",
+  "office": "Philippines",
+  "subcompany": "NotACompany",
+  "job_descriptions": {
+    "jobDescription": [
+      {
+        "name": "Timezone"
+      },
+      {
+        "value": "GMT+8"
+      }
+    ]
+  }
 }
 
 ### Approve job post

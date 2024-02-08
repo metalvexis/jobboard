@@ -1,16 +1,18 @@
+export type IUserRoles = "user" | "mod";
 export const USER_ROLES: Readonly<{
-  USER: string;
-  MOD: string;
+  USER: IUserRoles;
+  MOD: IUserRoles;
 }> = {
   USER: "user",
   MOD: "mod",
 };
 
-export const APPROVAL_STATUS: Readonly<{
-  PENDING: string;
-  APPROVED: string;
-  SPAM: string;
-}> = {
+export type IApprovalStatus = "pending" | "approved" | "spam";
+export const APPROVAL_STATUS: {
+  PENDING: IApprovalStatus;
+  APPROVED: IApprovalStatus;
+  SPAM: IApprovalStatus;
+} = {
   PENDING: "pending",
   APPROVED: "approved",
   SPAM: "spam",

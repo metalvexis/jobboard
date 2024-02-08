@@ -14,19 +14,15 @@ export const zWorkzag = z.object({
   department: z.string().optional(),
   recruitingCategory: z.string().optional(),
   name: z.string().optional(),
-  jobDescriptions: z.union([
-    z.string().optional(),
-    z
-      .object({
-        jobDescription: z.array(
-          z.object({
-            name: z.string(),
-            value: z.string(),
-          })
-        ),
-      })
-      .optional(),
-  ]),
+  jobDescriptions: z
+    .union([
+      z.string(),
+      z.record(
+        z.string(),
+        z.array(z.record(z.string(), z.string()).optional())
+      ),
+    ])
+    .optional(),
   employmentType: z.string().optional(),
   seniority: z.string().optional(),
   schedule: z.string().optional(),
@@ -91,19 +87,9 @@ export const zCreateWorkzagReq = z.object({
   department: z.string().optional(),
   recruiting_category: z.string().optional(),
   name: z.string().optional(),
-  job_descriptions: z.union([
-    z.string().optional(),
-    z
-      .object({
-        job_description: z.array(
-          z.object({
-            name: z.string(),
-            value: z.string(),
-          })
-        ),
-      })
-      .optional(),
-  ]),
+  job_descriptions: z
+    .record(z.string(), z.array(z.record(z.string(), z.string()).optional()))
+    .optional(),
   employment_type: z.string().optional(),
   seniority: z.string().optional(),
   schedule: z.string().optional(),
@@ -136,4 +122,9 @@ export type NotificationReq = {
   }[];
   job: Partial<Tables<"jobs">>;
   user: string;
+};
+
+export type JobDescription = {
+  name: string;
+  value: string;
 };

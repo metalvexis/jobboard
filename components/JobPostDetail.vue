@@ -20,16 +20,13 @@
 </template>
 
 <script lang="ts" setup>
-type Description = {
-  name: string,
-  value: string,
-}
-const jobDescriptions: Description[] = reactive([])
+
+const jobDescriptions: JobDescription[] = reactive([])
 const props = defineProps<{
   jobItem: Partial<Tables<"jobs">> | null,
 }>();
 
-const tmpDesc = props.jobItem?.job_descriptions as { jobDescription: Description[] } | undefined;
+const tmpDesc = props.jobItem?.job_descriptions as { jobDescription: JobDescription[] } | undefined;
 
 // TODO: jobDescription is nullable and should be handled
 tmpDesc?.jobDescription?.forEach((d) => {

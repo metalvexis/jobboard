@@ -14,7 +14,18 @@ content-type: application/json
 {
   "email": "user22@mail.com",
   "name": "Full Stack Developer (m/w/d)",
-  "office": "Philippines"
+  "office": "Philippines",
+  "subcompany", "NotACompany",
+  "job_descriptions": {
+    "jobDescription": [
+      {
+        "name": "Timezone"
+      },
+      {
+        "value": "GMT+8"
+      }
+    ]
+  }
 }
 
 ### Approve job post
