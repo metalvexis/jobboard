@@ -1,14 +1,11 @@
 <template>
-  <div class="flex flex-col gap-8 py-6 relative justify-center">
-    <p class="font-serif font-semibold text-lg md:text-3xl text-center">Job Board</p>
-    <div v-for="job in [...extJobsList, ...jobsList]" :key="job.id">
-      <div class="flex flex-col gap-2">
-        <p class="font-serif font-semibold text-lg md:text-2xl">{{ job.id }} {{ job.name }}</p>
-        <p class="font-sans font-semibold text-base md:text-lg">{{ job.office }}</p>
-      </div>
-    </div>
+  <div class="flex flex-col gap-8 py-6 px-8 relative justify-center">
+    <!-- <ULink to="/jobs-ext">Jobs External</ULink> -->
+    <JobPostSummary :jobsList="extJobsList" path="/jobs-ext/" />
+    <JobPostSummary :jobsList="jobsList" path="/jobs-int/" />
+
     <div class="flex justify-center">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="loadMore"
+      <button class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-2 px-4 rounded" @click="loadMore"
         v-if="maxPages && page + 1 < maxPages">Load
         More</button>
     </div>
@@ -16,6 +13,14 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Job Board',
+  description: 'Job board for the company',
+  articleTag: ['job', 'board', 'company', 'workzag', 'jobs', 'openings', 'hiring', 'career', 'opportunities', 'employment', 'work', 'job board', 'job openings'],
+})
+definePageMeta({
+  colorMode: 'dark',
+})
 import type { GetWorkzagListRes } from '~/utils/zods';
 import type { Tables } from "~/utils/supabase";
 

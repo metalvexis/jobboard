@@ -1,10 +1,6 @@
 <template>
-  <div class="flex flex-col gap-8 py-6 relative justify-center">
-    Jobs Page here
-    <div class="flex flex-col gap-2">
-      <p class="font-serif font-semibold text-lg md:text-2xl">{{ jobItem?.id }} {{ jobItem?.name }}</p>
-      <p class="font-sans font-semibold text-base md:text-lg">{{ jobItem?.office }}</p>
-    </div>
+  <div class="flex flex-col gap-8 py-6 px-8 relative justify-center">
+    <JobPostDetail :jobItem="jobItem" />
   </div>
 </template>
 
@@ -18,4 +14,9 @@ const jobItem = computed(() => {
     )
   return items[0];
 });
+
+useSeoMeta({
+  title: jobItem.value?.name || 'Job Posting',
+  articleTag: ['job', 'board', 'company', 'workzag', 'jobs', 'openings', 'hiring', 'career', 'opportunities', 'employment', 'work', 'job board', 'job openings'],
+})
 </script>
