@@ -4,6 +4,7 @@ import { zCreateWorkzagReq } from "~/utils/zods";
 import type { NotificationReq } from "~/utils/zods";
 import type { Tables, Database } from "~/utils/supabase";
 import { USER_ROLES, APPROVAL_STATUS } from "~/utils/constants";
+import { publishToQueue } from "~/utils/publish_to_queue";
 
 const QUEUE_NAME = process.env.NOTIF_QUEUE || "NOTIF_QUEUE";
 
