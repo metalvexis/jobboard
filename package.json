@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxt/ui": "^2.13.0",
+    "@vueuse/nuxt": "^10.7.2",
     "amqplib": "^0.10.3",
     "buffer": "^6.0.3",
     "fast-xml-parser": "^4.3.4",

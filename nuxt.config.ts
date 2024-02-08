@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 
   pages: true,
 
-  modules: ["@nuxtjs/supabase", "@nuxt/ui"],
+  modules: ["@nuxtjs/supabase", "@nuxt/ui", "@vueuse/nuxt"],
 
   supabase: {
     redirect: false,

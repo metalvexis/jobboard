@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-8 py-6 relative justify-center">
     <p class="font-serif font-semibold text-lg md:text-3xl text-center">Job Board</p>
-    <div v-for="job in jobsList" :key="job.id">
+    <div v-for="job in [...extJobsList, ...jobsList]" :key="job.id">
       <div class="flex flex-col gap-2">
         <p class="font-serif font-semibold text-lg md:text-2xl">{{ job.id }} {{ job.name }}</p>
         <p class="font-sans font-semibold text-base md:text-lg">{{ job.office }}</p>
@@ -19,7 +19,9 @@
 import type { GetWorkzagListRes } from '~/utils/zods';
 import type { Tables } from "~/utils/supabase";
 
+const cachedWorkzag = await useCachedWorkzag();
 const jobsList = ref<Partial<Tables<'jobs'>>[]>([]);
+const extJobsList = computed(() => cachedWorkzag.value?.workzag || []);
 
 const maxPages = ref<number | null>(null);
 const page = ref(0);
@@ -41,11 +43,6 @@ const fetchJobs = async (page: number) => {
     jobsList.value.push(job);
   });
 }
-
-watch(jobsList, (newVal) => {
-  console.log('jobsList', newVal.length)
-  console.log('maxPages', maxPages.value)
-});
 
 fetchJobs(0);
 </script>
