@@ -18,9 +18,10 @@ Create a new job posting
 
 ### Query Parameters
 
-| field | type     | description |
-| ----- | -------- | ----------- |
-| page  | `string` |             |
+| field           | type     | description             |
+| --------------- | -------- | ----------------------- |
+| page            | `string` |                         |
+| approval_status | `string` | pending, approved, spam |
 
 ### Responses
 

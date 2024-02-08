@@ -3,7 +3,7 @@ import type { Tables, Database } from "~/utils/supabase";
 import { zh } from "h3-zod";
 import { zGetWorkzagListReq } from "~/utils/zods";
 import type { GetWorkzagListReq, GetWorkzagListRes } from "~/utils/zods";
-
+import { APPROVAL_STATUS } from "~/utils/constants";
 const PER_PAGE = 10;
 
 export default eventHandler(async (event): Promise<GetWorkzagListRes> => {
@@ -11,7 +11,7 @@ export default eventHandler(async (event): Promise<GetWorkzagListRes> => {
 
   const sbclient = serverSupabaseServiceRole<Database>(event);
 
-  const { page } = getQuery<GetWorkzagListReq>(event);
+  const { page, approval_status } = getQuery<GetWorkzagListReq>(event);
 
   const startIndex = PER_PAGE * (parseInt(page || "") || 0);
   const lastIndex = startIndex + PER_PAGE - 1;
@@ -25,6 +25,7 @@ export default eventHandler(async (event): Promise<GetWorkzagListRes> => {
       await sbclient
         .from("jobs")
         .select("*")
+        .eq("approval_status", approval_status || APPROVAL_STATUS.APPROVED)
         .order("created_at", { ascending: false })
         .range(startIndex, lastIndex)
     ).data || [];

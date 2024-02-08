@@ -46,6 +46,7 @@ export type GetWorkzagReq = z.infer<typeof zGetWorkzagReq>;
 
 export const zGetWorkzagListReq = z.object({
   page: z.string().optional(),
+  approval_status: z.string().optional(),
 });
 
 export type GetWorkzagListReq = z.infer<typeof zGetWorkzagListReq>;
