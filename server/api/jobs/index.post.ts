@@ -45,12 +45,13 @@ export default eventHandler(async (event) => {
     // inherit approval status from first post
     const assertUserFirstPost = await sbclient
       .from("jobs")
-      .select("approval_status", { count: "exact", head: true })
+      .select("approval_status")
       .eq("user_id", userId)
       .order("created_at", { ascending: true })
-      .single();
+      .limit(1);
+
     approval_status =
-      (assertUserFirstPost.data?.approval_status as IApprovalStatus) ||
+      (assertUserFirstPost.data?.[0].approval_status as IApprovalStatus) ||
       APPROVAL_STATUS.PENDING;
   }
 

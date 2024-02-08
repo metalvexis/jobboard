@@ -12,9 +12,9 @@ POST http://localhost:3000/api/jobs
 content-type: application/json
 
 {
-  "email": "user25@mail.com",
-  "name": "Full Stack Developer (m/w/d)",
-  "office": "Philippines",
+  "email": "spamuser2@mail.com",
+  "name": "Full Stack Developer (test spam)",
+  "office": "Mars",
   "subcompany": "NotACompany",
   "job_descriptions": {
     "jobDescription": [
