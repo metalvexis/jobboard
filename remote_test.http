@@ -12,17 +12,19 @@ POST https://jobboard-production-2cf3.up.railway.app/api/jobs
 content-type: application/json
 
 {
-  "email": "user22@mail.com",
+  "email": "user25@mail.com",
   "name": "Full Stack Developer (m/w/d)",
   "office": "Philippines",
-  "subcompany", "NotACompany",
+  "subcompany": "NotACompany",
   "job_descriptions": {
     "jobDescription": [
       {
-        "name": "Timezone"
+        "name": "Timezone",
+        "value": "GMT+8"
       },
       {
-        "value": "GMT+8"
+        "name": "Work hours",
+        "value": "8:00 - 17:00"
       }
     ]
   }

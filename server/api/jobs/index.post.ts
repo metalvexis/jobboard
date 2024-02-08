@@ -41,17 +41,17 @@ export default eventHandler(async (event) => {
 
     console.log("created new user", newUser);
   } else {
-    // check if user has posted spam before, if so, set approval_status to spam
-    // const assertUserSpamCount = await sbclient
-    //   .from("jobs")
-    //   .select("approval_status", { count: "exact", head: true })
-    //   .eq("approval_status", APPROVAL_STATUS.SPAM);
-    // const hasPostedSpam =
-    //   assertUserSpamCount.count !== null && assertUserSpamCount.count > 0;
-    // approval_status = hasPostedSpam
-    //   ? APPROVAL_STATUS.SPAM
-    //   : APPROVAL_STATUS.APPROVED;
-    userId = assertUser.data[0].id || null;
+    userId = assertUser.data[0].id;
+    // inherit approval status from first post
+    const assertUserFirstPost = await sbclient
+      .from("jobs")
+      .select("approval_status", { count: "exact", head: true })
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
+      .single();
+    approval_status =
+      (assertUserFirstPost.data?.approval_status as IApprovalStatus) ||
+      APPROVAL_STATUS.PENDING;
   }
 
   const typecastedJd = rest.job_descriptions?.[

@@ -2,7 +2,6 @@ import { serverSupabaseServiceRole } from "#supabase/server";
 import type { Tables, Database } from "~/utils/supabase";
 import { assert_job } from "~/utils/assert_job";
 import { assert_jwt } from "~/utils/assert_jwt";
-import type { AuthKey } from "~/utils/zods";
 import { APPROVAL_STATUS } from "~/utils/constants";
 
 export default eventHandler({
@@ -11,17 +10,29 @@ export default eventHandler({
     const job = event.context.job as Tables<"jobs">;
 
     const sbclient = serverSupabaseServiceRole<Database>(event);
+    const targetPost = (
+      await sbclient.from("jobs").select().eq("id", job.id).single()
+    ).data;
+
+    const userIdPoster = targetPost?.user_id || null;
+
+    if (!userIdPoster) {
+      throw createError({
+        statusCode: 404,
+        message: "User not found",
+      });
+    }
+
     const spamPost = (
       await sbclient
         .from("jobs")
         .update({ approval_status: APPROVAL_STATUS.SPAM })
-        .eq("id", job.id)
+        .eq("user_id", userIdPoster)
         .select()
-        .single()
     ).data;
 
     return {
-      job: spamPost,
+      jobs: spamPost,
     };
   },
 });
