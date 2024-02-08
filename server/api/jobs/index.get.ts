@@ -18,7 +18,8 @@ export default eventHandler(async (event): Promise<GetWorkzagListRes> => {
   console.log("range", startIndex, lastIndex);
   const allJobsCount = await sbclient
     .from("jobs")
-    .select("id", { count: "exact", head: true });
+    .select("id", { count: "exact", head: true })
+    .eq("approval_status", approval_status || APPROVAL_STATUS.APPROVED);
   const totalJobCount = allJobsCount.count || 0;
   const jobs =
     (
